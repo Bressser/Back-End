@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "title": "Smartphone Galaxy S20",
+        "description": "El smartphone Galaxy S20 te brinda una experiencia de cámara profesional, pantalla de 120 Hz y rendimiento excepcional.",
+        "price": 799.99,
+        "image": "https://example.com/s20.jpg",
+        "stock": 50
+    },
+    {
+        "id": 2,
+        "title": "Tablet iPad Air",
+        "description": "La tablet iPad Air combina potencia y portabilidad con su chip A14 Bionic, pantalla Liquid Retina y compatibilidad con Apple Pencil.",
+        "price": 599.99,
+        "image": "https://example.com/ipadair.jpg",
+        "stock": 30
+    },
+    {
+        "id": 3,
+        "title": "Laptop Dell XPS 13",
+        "description": "La laptop Dell XPS 13 ofrece un rendimiento excepcional en un diseño compacto, con pantalla InfinityEdge y procesadores Intel de última generación.",
+        "price": 1199.99,
+        "image": "https://example.com/xps13.jpg",
+        "stock": 20
+    },
+    {
+        "id": 4,
+        "title": "Smartwatch Apple Watch Series 6",
+        "description": "El smartwatch Apple Watch Series 6 te mantiene conectado y activo con su pantalla Retina siempre activa, monitorización de la salud y apps para mantener tu bienestar.",
+        "price": 399.99,
+        "image": "https://example.com/applewatch.jpg",
+        "stock": 40
+    },
+    {
+        "id": 5,
+        "title": "Cámara Canon EOS R5",
+        "description": "La cámara Canon EOS R5 ofrece una calidad de imagen excepcional, grabación de video 8K y un sistema de enfoque automático avanzado para capturar momentos inolvidables.",
+        "price": 3899.99,
+        "image": "https://example.com/eosr5.jpg",
+        "stock": 10
+    },
+    {
+        "id": 6,
+        "title": "Auriculares Sony WH-1000XM4",
+        "description": "Los auriculares Sony WH-1000XM4 ofrecen cancelación de ruido líder en su clase, calidad de sonido premium y comodidad para uso prolongado.",
+        "price": 349.99,
+        "image": "https://example.com/wh1000xm4.jpg",
+        "stock": 25
+    },
+    {
+        "id": 7,
+        "title": "Altavoz Bluetooth JBL Charge 4",
+        "description": "El altavoz Bluetooth JBL Charge 4 te ofrece un sonido potente, resistencia al agua y una batería de larga duración para disfrutar de la música en cualquier lugar.",
+        "price": 139.99,
+        "image": "https://example.com/charge4.jpg",
+        "stock": 35
+    },
+    {
+        "id": 8,
+        "title": "Monitor LG UltraGear 27GL850-B",
+        "description": "El monitor LG UltraGear 27GL850-B te ofrece una experiencia de juego inmersiva con su pantalla Nano IPS de 27 pulgadas, frecuencia de actualización de 144 Hz y compatibilidad con G-Sync.",
+        "price": 499.99,
+        "image": "https://example.com/27gl850.jpg",
+        "stock": 15
+    },
+    {
+        "id": 9,
+        "title": "Impresora HP ENVY 6055",
+        "description": "La impresora HP ENVY 6055 te ofrece impresiones de alta calidad desde tu smartphone o PC, con conectividad Wi-Fi y funciones de escaneo y copia.",
+        "price": 129.99,
+        "image": "https://example.com/envy6055.jpg",
+        "stock": 20
+    },
+    {
+        "id": 10,
+        "title": "Router ASUS RT-AX86U",
+        "description": "El router ASUS RT-AX86U te brinda una conexión Wi-Fi rápida y segura para tus dispositivos, con tecnología Wi-Fi 6 y funciones avanzadas de seguridad.",
+        "price": 249.99,
+        "image": "https://example.com/rtax86u.jpg",
+        "stock": 25
+    }
+]
