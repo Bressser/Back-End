@@ -28,20 +28,20 @@ class CartManager {
     }
 
     async crearCarrito() {
-        const nuevoCarrito = {
-            id: ++this.ultId,
-            products: []
-        }
-
-        this.carts.push(nuevoCarrito);
-
-        await this.guardarCarritos();
-        return nuevoCarrito;
-    }
+        try {
+            const nuevoCarrito = new CartModel({products: []});
+            await nuevoCarrito.save();
+            return nuevoCarrito;
+            
+        } catch (error) {
+            console.log("Error al crear un carrito nuevo", error)
+            throw error;
+            
+        }}
 
     async getCarritoById(carritoId) {
         try {
-            const carrito = this.carts.find(c => c.id === carritoId);
+            const carrito = await CartModel.findById(carritoId);
 
             if (!carrito) {
                 console.log("No hay carrito con ese id");
@@ -55,19 +55,24 @@ class CartManager {
     }
 
     async agregarProductoAlCarrito(carritoId, productoId, quantity = 1) {
-        const carrito = await this.getCarritoById(carritoId);
-        const existeProducto = carrito.products.find(p => p.product === productoId);
+        try{
+            const carrito = await this.getCarritoById(carritoId);
+            const existeProducto = carrito.products.find(item = item.product.toString () === productId);
+            
+            if(existeProducto){
+                existeProducto.quantity += quantity;
+            }else {
+                carrito.products.push({product: productId, quantity});
+            }
 
-        if (existeProducto) {
-            existeProducto.quantity += quantity;
-        } else {
-            carrito.products.push({ product: productoId, quantity });
-        }
-
-        await this.guardarCarritos();
-        return carrito;
-    }
-}
+            carrito.markModified("products");
+            
+            await carrito.save();
+            return carrito;
+        } catch (error){
+            console.log("Error al agregar un producto", error)
+            throw error
+        }}}
 
 
 module.exports = CartManager;
