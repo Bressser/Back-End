@@ -30,7 +30,6 @@ const httpServer = app.listen(PUERTO, () => {
 })
 
 // CHAT
-
 const MessageModel = require ("./models/message.model.js");
 const io = new socket.Server(httpServer);
 
