@@ -1,130 +1,68 @@
-const ProductModel = require("../models/product.model");
+const ProductRepository = require("../repositories/product.repository.js");
+const productRepository = new ProductRepository();
 
-const fs = require("fs").promises;
+class ProductController {
 
-class ProductManager {
-  static ultId = 0;
+    async addProduct(req, res) {
+        const nuevoProducto = req.body;
+        try {
+            const resultado = await productRepository.agregarProducto(nuevoProducto);
+            res.json(resultado);
 
-  constructor(path) {
-    this.products = [];
-    this.path = path;
-  }
-
-  async addProduct({ title, description, price, img, code, stock, category, thumbnails }) {
-    try {
-      if (!title || !description || !price || !code || !stock || !category) {
-        console.log("Todos los campos son obligatorios");
-        return;
-      }
-      const existeProducto = await ProductModel.findOne({code: code});
-
-      if (existeProducto) {
-        console.log("El código debe ser único");
-        return;
-      }
-
-      const newProduct = {
-        title,
-        description,
-        price,
-        img,
-        code,
-        stock,
-        category,
-        status: true,
-        thumbnails: thumbnails || []
-      };
-
-      await nuevoProducto.save();
-    } catch (error) {
-      console.log ("Error al agregar un producto", error);
-      throw error;
-    }}
-
-  async getProducts() {
-    try {
-      const arrayProductos = await ProductModel.find();
-      return arrayProductos;
-    } catch (error) {
-      console.log("Error al leer el archivo", error);
-      throw error;
+        } catch (error) {
+            res.status(500).send("Error");
+        }
     }
-  }
 
-  async getProductById(id) {
-    try {
-      const arrayProductos = await ProductModel.findById(id);
-      const buscado = arrayProductos.find(item => item.id === id);
+    async getProducts(req, res) {
+        try {
+            let { limit = 10, page = 1, sort, query } = req.query;
 
-      if (!buscado) {
-        console.log("Producto no encontrado");
-        return null;
-      } else {
-        console.log("Producto encontrado");
-        return buscado;
-      }
-    } catch (error) {
-      console.log("Error al leer el archivo", error);
-      throw error;
+            const productos = await productRepository.obtenerProductos(limit, page, sort, query);
+           
+            res.json(productos);
+        } catch (error) { 
+            res.status(500).send("Error");
+        }
     }
-  }
 
-  async leerArchivo() {
-    try {
-      const respuesta = await fs.readFile(this.path, "utf-8");
-      const arrayProductos = JSON.parse(respuesta);
-      return arrayProductos;
-    } catch (error) {
-      console.log("Error al leer un archivo", error);
-      throw error;
+    async getProductById(req, res) {
+        const id = req.params.pid;
+        try {
+            const buscado = await productRepository.obtenerProductoPorId(id);
+            if (!buscado) {
+                return res.json({
+                    error: "Producto no encontrado"
+                });
+            }
+            res.json(buscado);
+        } catch (error) {
+            res.status(500).send("Error");
+        }
     }
-  }
 
-  async guardarArchivo(arrayProductos) {
-    try {
-      await fs.writeFile(this.path, JSON.stringify(arrayProductos, null, 2));
-    } catch (error) {
-      console.log("Error al guardar el archivo", error);
-      throw error;
+    async updateProduct(req, res) {
+        try {
+            const id = req.params.pid;
+            const productoActualizado = req.body;
+
+            const resultado = await productRepository.actualizarProducto(id, productoActualizado);
+            res.json(resultado);
+        } catch (error) {
+            res.status(500).send("Error al actualizar el producto");
+        }
     }
-  }
 
-  async updateProduct(id, productoActualizado) {
-    try {
-      const updateProduct = await ProductModel.findByIdAndUpdate(id, productoActualizado);
+    async deleteProduct(req, res) {
+        const id = req.params.pid;
+        try {
+            let respuesta = await productRepository.eliminarProducto(id);
 
-      if (!updateProduct) {
-
-        console.log("No se encontró el producto");
-        return null;
-
-      } else {
-        console.log("Producto actualizado");
-        return updateProduct;
-      }
-    } catch (error) {
-      console.log("Error al actualizar el producto", error);
-      throw error;
+            res.json(respuesta);
+        } catch (error) {
+            res.status(500).send("Error al eliminar el producto");
+        }
     }
-  }
+}
 
-  async deleteProduct(id) {
-    try {
-      const deleteProduct = await ProductModel.findByIdAndDelete(id);
-
-      if (!deleteProduct) {
-
-        console.log("No se encontró el producto");
-        return null;
-
-      } else {
-        console.log("Producto eliminado");
-      }
-
-    } catch (error) {
-      console.log("Error al eliminar el producto", error);
-      throw error;
-    }
-  }}
-
-module.exports = ProductManager;
+module.exports = ProductController; 

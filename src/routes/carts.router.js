@@ -1,46 +1,19 @@
 const express = require("express");
-const router = express.Router(); 
-const CartManager = require("../controllers/cart-manager.js");
-const cartManager = new CartManager("./src/models/carts.json");
+const router = express.Router();
+const CartController = require("../controllers/cart.controller.js");
+const authMiddleware = require("../middleware/authmiddleware.js");
+const cartController = new CartController();
 
-router.post("/carts", async(req, res) => {
-    try {
-        const nuevoCarrito = await cartManager.crearCarrito();
-        res.json(nuevoCarrito);
-    } catch (error) {
-        res.status(500).json({
-            error: "Error interno del servidor"
-        });
-    }
-})
+router.use(authMiddleware);
 
-router.get("/carts/:cid", async (req, res) => {
-    const cartId = parseInt(req.params.cid);
+router.post("/", cartController.nuevoCarrito);
+router.get("/:cid", cartController.obtenerProductosDeCarrito);
+router.post("/:cid/product/:pid", cartController.agregarProductoEnCarrito);
+router.delete('/:cid/product/:pid', cartController.eliminarProductoDeCarrito);
+router.put('/:cid', cartController.actualizarProductosEnCarrito);
+router.put('/:cid/product/:pid', cartController.actualizarCantidad);
+router.delete('/:cid', cartController.vaciarCarrito);
+router.post('/:cid/purchase', cartController.finalizarCompra);
 
-    try {
-        const carrito = await cartManager.getCarritoById(cartId);
-        res.json(carrito.products);
-    } catch (error) {
-        res.status(500).json({
-            error: "Error interno del servidor"
-        });
-    }
-})
-
-router.post("/carts/:cid/product/:pid", async (req, res) => {
-    const cartId = parseInt(req.params.cid);
-    const productId = req.params.pid;
-    const quantity = req.body.quantity || 1
-
-    try {
-        const actualizarCarrito = await cartManager.agregarProductoAlCarrito(cartId,productId, quantity);
-        res.json(actualizarCarrito.products);
-    } catch (error) {
-        res.status(500).json({
-            error: "Error interno del servidor"
-        });
-    }
-
-})
 
 module.exports = router;
